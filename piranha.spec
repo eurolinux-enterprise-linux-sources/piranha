@@ -1,7 +1,7 @@
 Summary: Cluster administation tools  
 Name: piranha
 Version: 0.8.6
-Release: 4%{?dist}.2
+Release: 7%{?dist}
 URL: http://git.fedoraproject.org/git/piranha.git
 License: GPLv2+
 Group: System Environment/Base 
@@ -10,8 +10,9 @@ Source0: piranha-%{version}.tar.gz
 Patch0: bz860924_fix-ui-virtual-server-interface.patch
 Patch1: bz903711_fix-sorry-server.patch
 Patch2: bz980169_add-posix-semaphore-sync.patch
-Patch3: bz1055709_ignore-EINTR-from-sem_timedwait.patch
-Patch4: bz1061905_require-auth-HTTP-methods.patch
+Patch3: bz1052882_ignore-EINTR-from-sem_timedwait.patch
+Patch4: bz1061906_require-auth-HTTP-methods.patch
+Patch5: bz1319376_fix-remote-port-comparison.patch
 
 Buildroot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -35,8 +36,9 @@ and ftp servers though other services are supported.
 %patch0 -p1 -b .bz860924
 %patch1 -p1 -b .bz903711
 %patch2 -p1 -b .bz980169
-%patch3 -p1 -b .bz1055709
-%patch4 -p1 -b .bz1061905
+%patch3 -p1 -b .bz1052882
+%patch4 -p1 -b .bz1061906
+%patch5 -p1 -b .bz1319376
 
 %build
 #make RPM_OPT_FLAGS="$RPM_OPT_FLAGS" all
@@ -99,11 +101,14 @@ fi
 %{_mandir}/*/*
 
 %changelog
-* Thu Feb 06 2014 Ryan O'Hara <rohara@redhat.com> 0.8.6-4.2
-- Resolves: #1061905 - require authentication for all HTTP methods (CVE-2013-6492)
+* Thu Oct 20 2016 Ryan O'Hara <rohara@redhat.com> 0.8.6-7
+- Resolves: #1319376 - set remote port prior to comparison
 
-* Thu Jan 23 2014 Ryan O'Hara <rohara@redhat.com> 0.8.6-4.1
-- Resolves: #1055709 - ignore EINTR from sem_timedwait
+* Thu Jan 23 2014 Ryan O'Hara <rohara@redhat.com> 0.8.6-6
+- Resolves: #1061906 - require authentication for all HTTP methods (CVE-2013-6492)
+
+* Thu Jan 23 2014 Ryan O'Hara <rohara@redhat.com> 0.8.6-5
+- Resolves: #1052882 - ignore EINTR from sem_timedwait
 
 * Mon Jul 15 2013 Ryan O'Hara <rohara@redhat.com> 0.8.6-4
 - Resolves: #980169 - add POSIX semaphore for pulse/lvsd synchronization
