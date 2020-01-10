@@ -1,14 +1,15 @@
 Summary: Cluster administation tools  
 Name: piranha
 Version: 0.8.6
-Release: 2%{?dist}.1
+Release: 4%{?dist}
 URL: http://git.fedoraproject.org/git/piranha.git
 License: GPLv2+
 Group: System Environment/Base 
 
 Source0: piranha-%{version}.tar.gz
 Patch0: bz860924_fix-ui-virtual-server-interface.patch
-Patch1: bz915584_fix-sorry-server.patch
+Patch1: bz903711_fix-sorry-server.patch
+Patch2: bz980169_add-posix-semaphore-sync.patch
 
 Buildroot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -30,7 +31,8 @@ and ftp servers though other services are supported.
 %prep
 %setup -q -n piranha
 %patch0 -p1 -b .bz860924
-%patch1 -p1 -b .bz915584
+%patch1 -p1 -b .bz903711
+%patch2 -p1 -b .bz980169
 
 %build
 #make RPM_OPT_FLAGS="$RPM_OPT_FLAGS" all
@@ -93,8 +95,11 @@ fi
 %{_mandir}/*/*
 
 %changelog
-* Tue Feb 26 2013 Ryan O'Hara <rohara@redhat.com> 0.8.6-2.1
-- Resolves: #915584 - fix sorry server
+* Mon Jul 15 2013 Ryan O'Hara <rohara@redhat.com> 0.8.6-4
+- Resolves: #980169 - add POSIX semaphore for pulse/lvsd synchronization.
+
+* Tue Feb 19 2013 Ryan O'Hara <rohara@redhat.com> 0.8.6-3
+- Resolves: #903711 - fix sorry server
 
 * Fri Sep 28 2012 Ryan O'Hara <rohara@redhat.com> 0.8.6-2
 - Resolves: #860924 - fix virtual server interface in piranha-gui
